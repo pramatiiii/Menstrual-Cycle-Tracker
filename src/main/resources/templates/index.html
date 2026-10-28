@@ -1,49 +1,378 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fce7ed">
     <title>CycleCare | Your Cycle Companion</title>
-    <link rel="stylesheet" href="/css/style.css">
+   <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-    <div class="dashboard">
-        <header>
-            <h1>CycleCare 🌸</h1>
-            <p>Your personal menstrual cycle companion</p>
-        </header>
+<div class="app">
 
-        <main>
-            <section class="welcome-card">
-                <h2>Welcome to CycleCare!</h2>
-                <p>
-                    Understand your cycle, track your
-                    symptoms, and care for yourself.
-                </p>
-                <button type="button">
-                    Track My Cycle
-                </button>
-            </section>
+    <header class="topbar">
+        <a class="brand" href="/">Cycle<span>Care</span> 🌸</a>
+        <button class="icon-button" aria-label="Open calendar">▦</button>
+    </header>
 
-            <section class="features">
-                <div class="feature-card">
-                    <h3>📅 Cycle Calendar</h3>
-                    <p>Keep track of your period dates.</p>
+    <section class="date-section">
+        <div class="month-row">
+            <button class="avatar" aria-label="Profile">🌷</button>
+            <h2 id="monthTitle">October 2026</h2>
+            <button class="icon-button" aria-label="Calendar">▦</button>
+        </div>
+        <div class="weekdays">
+            <span>S</span><span>M</span><span>T</span>
+            <span>W</span><span>T</span><span>F</span><span>S</span>
+        </div>
+        <div class="dates" id="dateStrip"></div>
+    </section>
+
+    <main>
+        <section class="prediction">
+            <span class="eyebrow">YOUR CYCLE TODAY</span>
+            <div class="flower">✿</div>
+            <p class="prediction-label" id="predictionLabel">
+                Your cycle companion
+            </p>
+            <h1 id="predictionTitle">Get to know your cycle</h1>
+            <p class="prediction-description" id="predictionDescription">
+                Add your last period date to see your personal cycle estimate.
+            </p>
+            <button class="text-link" id="predictionInfo">
+                Understand your cycle <span>›</span>
+            </button>
+        </section>
+
+        <section class="quick-actions">
+            <button class="action" id="periodButton">
+                <span class="action-circle active">◉</span>
+                <span id="periodButtonLabel">Log period</span>
+            </button>
+            <button class="action" id="symptomButton">
+                <span class="action-circle">＋</span>
+                <span>Symptoms</span>
+            </button>
+            <button class="action" id="moodButton">
+                <span class="action-circle">♡</span>
+                <span>My mood</span>
+            </button>
+        </section>
+
+        <section class="insights-section">
+            <div class="section-heading">
+                <h2>My daily insights</h2>
+                <span id="todayLabel">Today</span>
+            </div>
+            <div class="insight-list">
+                <article class="insight-card insight-pink">
+                    <span class="insight-icon">🌸</span>
+                    <h3>Understand your cycle</h3>
+                    <p>Learn about the different phases of your cycle.</p>
+                    <button class="card-link" data-info="cycle">
+                        Explore <span>→</span>
+                    </button>
+                </article>
+                <article class="insight-card insight-lavender">
+                    <span class="insight-icon">♡</span>
+                    <h3>Your daily check-in</h3>
+                    <p>Notice patterns in how you feel each day.</p>
+                    <button class="card-link" data-info="symptoms">
+                        Check in <span>→</span>
+                    </button>
+                </article>
+                <article class="insight-card insight-peach">
+                    <span class="insight-icon">☀</span>
+                    <h3>Cycle day</h3>
+                    <p id="cycleDayCard">Add a period date to begin tracking.</p>
+                    <button class="card-link" data-info="calendar">
+                        View calendar <span>→</span>
+                    </button>
+                </article>
+            </div>
+        </section>
+
+        <section class="education-card">
+            <div class="education-heading">
+                <h2>Get to know your cycle</h2>
+                <span>♡</span>
+            </div>
+            <div class="education-content">
+                <div class="education-art">🌷</div>
+                <div>
+                    <span class="eyebrow">A LITTLE SELF-CARE</span>
+                    <h3>Your cycle, your experience</h3>
+                    <p>Track your period and symptoms to better understand your own patterns over time.</p>
+                    <button class="learn-button" data-info="cycle">
+                        Learn more →
+                    </button>
                 </div>
+            </div>
+            <p class="disclaimer">
+                Cycle estimates are not medical advice or reliable contraception.
+            </p>
+        </section>
+    </main>
 
-                <div class="feature-card">
-                    <h3>🌷 Period Predictions</h3>
-                    <p>View estimated upcoming periods.</p>
-                </div>
+    <nav class="bottom-nav" aria-label="Main navigation">
+        <button class="nav-item selected" data-page="today">
+            <span>⌂</span><small>Today</small>
+        </button>
+        <button class="nav-item" data-page="calendar">
+            <span>▦</span><small>Calendar</small>
+        </button>
+        <button class="nav-item" data-page="insights">
+            <span>♡</span><small>Insights</small>
+        </button>
+        <button class="nav-item" data-page="profile">
+            <span>☻</span><small>Profile</small>
+        </button>
+    </nav>
 
-                <div class="feature-card">
-                    <h3>💗 Symptom Tracker</h3>
-                    <p>Record how you feel each day.</p>
-                </div>
-            </section>
-        </main>
-    </div>
+</div>
+
+<div class="modal-backdrop" id="modal" hidden>
+    <section class="modal" role="dialog" aria-modal="true"
+             aria-labelledby="modalTitle">
+        <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+        <h2 id="modalTitle">CycleCare</h2>
+        <div id="modalContent"></div>
+    </section>
+</div>
+
+<script>
+    const today = new Date();
+    let lastPeriodDate = localStorage.getItem("cyclecareLastPeriod")
+        || "";
+    let periodLoggedToday = false;
+
+    const dateStrip = document.getElementById("dateStrip");
+
+    function formatDate(date) {
+        return date.toISOString().slice(0, 10);
+    }
+
+    function renderDates() {
+        dateStrip.innerHTML = "";
+        const start = new Date(today);
+        start.setDate(today.getDate() - today.getDay());
+
+        document.getElementById("monthTitle").textContent =
+            today.toLocaleDateString("en", {
+                month: "long", year: "numeric"
+            });
+
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(start);
+            date.setDate(start.getDate() + i);
+
+            const button = document.createElement("button");
+            button.className = "date-item";
+            button.innerHTML =
+                `<small>${date.toLocaleDateString("en", {
+                    weekday: "short"
+                }).slice(0, 1)}</small>
+                <span>${date.getDate()}</span>`;
+
+            if (formatDate(date) === formatDate(today)) {
+                button.classList.add("current");
+            }
+
+            button.addEventListener("click", () => {
+                document.querySelectorAll(".date-item")
+                    .forEach(item => item.classList.remove("chosen"));
+                button.classList.add("chosen");
+                showModal("Selected date",
+                    `<p>${date.toLocaleDateString("en", {
+                        dateStyle: "full"
+                    })}</p><p>Select a date to review your entries as tracking features are added.</p>`);
+            });
+
+            dateStrip.appendChild(button);
+        }
+
+        document.getElementById("todayLabel").textContent =
+            today.toLocaleDateString("en", {
+                month: "short", day: "numeric"
+            });
+    }
+
+    function updatePrediction() {
+        if (!lastPeriodDate) {
+            document.getElementById("predictionTitle").textContent =
+                "Get to know your cycle";
+            document.getElementById("predictionLabel").textContent =
+                "YOUR CYCLE, YOUR WAY";
+            document.getElementById("predictionDescription").textContent =
+                "Add the first day of your last period to begin.";
+            document.getElementById("cycleDayCard").textContent =
+                "Your cycle day will appear here.";
+            return;
+        }
+
+        const start = new Date(lastPeriodDate + "T12:00:00");
+        const current = new Date(today);
+        current.setHours(12, 0, 0, 0);
+
+        const days = Math.floor((current - start) / 86400000);
+        if (days < 0) {
+            document.getElementById("predictionTitle").textContent =
+                "Check your period date";
+            document.getElementById("predictionDescription").textContent =
+                "The date you entered is in the future.";
+            return;
+        }
+
+        const cycleLength = 28;
+        const cycleDay = (days % cycleLength) + 1;
+        const daysUntilPeriod = cycleLength - (days % cycleLength);
+
+        document.getElementById("predictionLabel").textContent =
+            "YOUR CYCLE TODAY";
+        document.getElementById("predictionTitle").textContent =
+            "Cycle day " + cycleDay;
+        document.getElementById("predictionDescription").textContent =
+            "Estimated next period in " + daysUntilPeriod + " days.";
+        document.getElementById("cycleDayCard").textContent =
+            "You are on cycle day " + cycleDay + ".";
+    }
+
+    function showModal(title, content) {
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalContent").innerHTML = content;
+        document.getElementById("modal").hidden = false;
+    }
+
+    function closeModal() {
+        document.getElementById("modal").hidden = true;
+    }
+
+    document.getElementById("closeModal")
+        .addEventListener("click", closeModal);
+
+    document.getElementById("modal").addEventListener("click", event => {
+        if (event.target.id === "modal") closeModal();
+    });
+
+    document.getElementById("periodButton").addEventListener("click", () => {
+        showModal("Log your period", `
+            <p>Choose the first day of your most recent period.</p>
+            <form id="periodForm">
+                <label for="periodDate">Period start date</label>
+                <input id="periodDate" type="date" required
+                       max="${formatDate(today)}"
+                       value="${lastPeriodDate || formatDate(today)}">
+                <button class="primary-button" type="submit">Save date</button>
+            </form>
+            <p class="form-note">This prototype saves the date in this browser only.</p>
+        `);
+
+        document.getElementById("periodForm").addEventListener("submit",
+            event => {
+                event.preventDefault();
+                const date = document.getElementById("periodDate").value;
+                if (!date || date > formatDate(today)) return;
+                lastPeriodDate = date;
+                localStorage.setItem("cyclecareLastPeriod", date);
+                periodLoggedToday = true;
+                document.getElementById("periodButtonLabel").textContent =
+                    "Edit period";
+                updatePrediction();
+                closeModal();
+            });
+    });
+
+    document.getElementById("symptomButton").addEventListener("click", () => {
+        showModal("Daily symptoms", `
+            <p>How are you feeling today?</p>
+            <form id="symptomForm">
+                <label for="symptom">Choose a symptom</label>
+                <select id="symptom">
+                    <option>Cramps</option>
+                    <option>Bloating</option>
+                    <option>Headache</option>
+                    <option>Fatigue</option>
+                    <option>Tender breasts</option>
+                    <option>No symptoms</option>
+                </select>
+                <label for="severity">Intensity</label>
+                <select id="severity">
+                    <option>Mild</option><option>Moderate</option>
+                    <option>Severe</option>
+                </select>
+                <button class="primary-button" type="submit">Save check-in</button>
+            </form>
+        `);
+        document.getElementById("symptomForm").addEventListener("submit",
+            event => {
+                event.preventDefault();
+                const symptom = document.getElementById("symptom").value;
+                const severity = document.getElementById("severity").value;
+                localStorage.setItem("cyclecareSymptom",
+                    JSON.stringify({ symptom, severity, date: formatDate(today) }));
+                showModal("Check-in saved",
+                    `<p>Your ${symptom.toLowerCase()} check-in (${severity.toLowerCase()}) is saved in this browser.</p>`);
+            });
+    });
+
+    document.getElementById("moodButton").addEventListener("click", () => {
+        showModal("Mood check-in", `
+            <p>How would you describe your mood today?</p>
+            <div class="mood-options">
+                <button data-mood="Happy">😊 Happy</button>
+                <button data-mood="Okay">🙂 Okay</button>
+                <button data-mood="Low">😔 Low</button>
+                <button data-mood="Anxious">😟 Anxious</button>
+            </div>
+        `);
+        document.querySelectorAll("[data-mood]").forEach(button => {
+            button.addEventListener("click", () => {
+                localStorage.setItem("cyclecareMood",
+                    JSON.stringify({ mood: button.dataset.mood, date: formatDate(today) }));
+                showModal("Mood saved", `<p>Your mood check-in is saved in this browser.</p>`);
+            });
+        });
+    });
+
+    document.querySelectorAll("[data-info]").forEach(button => {
+        button.addEventListener("click", () => {
+            const pages = {
+                cycle: ["Your cycle", "Menstrual cycles vary. Tracking your own dates over time can help you notice your personal patterns."],
+                symptoms: ["Daily check-in", "Record symptoms and mood consistently to build a personal history."],
+                calendar: ["Cycle calendar", "Your calendar and cycle history will become more detailed as we build the tracker."]
+            };
+            const page = pages[button.dataset.info];
+            showModal(page[0], `<p>${page[1]}</p>`);
+        });
+    });
+
+    document.getElementById("predictionInfo").addEventListener("click", () => {
+        showModal("About cycle estimates",
+            "<p>Cycle length varies between people and from month to month. This early prototype uses a simple 28-day estimate, which is not a medical prediction and should not be used to prevent pregnancy.</p>");
+    });
+
+    document.querySelectorAll(".nav-item").forEach(button => {
+        button.addEventListener("click", () => {
+            document.querySelectorAll(".nav-item")
+                .forEach(item => item.classList.remove("selected"));
+            button.classList.add("selected");
+
+            const pages = {
+                today: ["Today", "Your daily cycle dashboard."],
+                calendar: ["Calendar", "Your selected dates and period history will appear here."],
+                insights: ["Insights", "Your symptom and cycle patterns will appear here."],
+                profile: ["Profile", "Account settings will be added in a later phase."]
+            };
+            const page = pages[button.dataset.page];
+            if (button.dataset.page !== "today") {
+                showModal(page[0], `<p>${page[1]}</p>`);
+            }
+        });
+    });
+
+    renderDates();
+    updatePrediction();
+</script>
 </body>
 </html>
